@@ -1,0 +1,46 @@
+body {
+    background-color: #f5f3ef;
+    font-family: Georgia, serif;
+    color: #222;
+    margin: 0;
+}
+
+header {
+    text-align: center;
+    padding: 80px;
+}
+
+nav {
+    text-align: center;
+    padding: 20px;
+}
+
+section {
+    max-width: 1000px;
+    margin: auto;
+    padding: 60px;
+}
+
+img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.feature-box {
+    background: white;
+    padding: 25px;
+    margin: 25px 0;
+    border-radius: 10px;
+}
+
+.highlight {
+    color: #1e5a73;
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #1e5a73;
+    color: white;
+    text-decoration: none;
+}
