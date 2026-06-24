@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lauren Kamauu | Storyteller</title>
+
+<!-- Fonts (luxury editorial style) -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* =========================
+   LUXURY DESIGN SYSTEM
+========================= */
+
+:root {
+  --navy: #0b1b2b;
+  --sand: #d6c7ad;
+  --offwhite: #f7f5f0;
+  --muted: #8d8a83;
+  --text: #1c1c1c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--offwhite);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+h1, h2, h3 {
+  font-family: "Playfair Display", serif;
+  font-weight: 500;
+  color: var(--navy);
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+p {
+  font-size: 1.05rem;
+  color: #333;
+}
+
+.small-heading {
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+section {
+  padding: 120px 10%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.section-title {
+  margin-bottom: 30px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(
+    to bottom right,
+    var(--offwhite),
+    #efe9df
+  );
+}
+
+.hero-text {
+  max-width: 700px;
+}
+
+.hero p {
+  margin-top: 20px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.button {
+  display: inline-block;
+  margin-top: 30px;
+  margin-right: 15px;
+  padding: 12px 26px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  background: var(--navy);
+  color: white;
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  background: #152c44;
+}
+
+.button.secondary {
+  background: transparent;
+  border: 1px solid var(--navy);
+  color: var(--navy);
+}
+
+.button.secondary:hover {
+  background: var(--navy);
+  color: white;
+}
+
+/* =========================
+   CARDS / SECTIONS
+========================= */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.card, .experience-item, .project {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  transition: all 0.4s ease;
+}
+
+.card:hover, .experience-item:hover, .project:hover {
+  transform: translateY(-8px);
+}
+
+/* =========================
+   BLOCKQUOTE
+========================= */
+
+blockquote {
+  margin: 30px 0;
+  padding-left: 20px;
+  border-left: 3px solid var(--sand);
+  font-style: italic;
+  color: var(--navy);
+  font-size: 1.2rem;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1s ease forwards;
+}
+
+.fade-in.delay {
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  section {
+    padding: 80px 6%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero fade-in">
+
+  <div class="hero-text">
+
+    <p class="small-heading">KANAKA MAOLI • STORYTELLER • MARKETING STUDENT</p>
+
+    <h1>Creating stories that connect people, culture, and community.</h1>
+
+    <p>
+      Aloha, I'm Lauren Kamauu. I am a Native Hawaiian storyteller, marketer, and aspiring filmmaker at Brigham Young University.
+      I use storytelling, leadership, and business to preserve Hawaiian culture and create opportunities for future generations.
+    </p>
+
+    <a href="#portfolio" class="button">View My Work</a>
+    <a href="#about" class="button secondary">My Story</a>
+
+  </div>
+
+</section>
+
+
+<!-- ABOUT -->
+<section id="about" class="fade-in delay">
+
+  <h2 class="section-title">My Story</h2>
+
+  <p>Growing up in Hawaiʻi shaped how I see the world.</p>
+
+  <p>
+    As a Kanaka Maoli, I learned the importance of community, service, and preserving the stories of those who came before me.
+  </p>
+
+  <p>
+    At Brigham Young University, I combine marketing, storytelling, and leadership across real-world projects.
+  </p>
+
+  <blockquote>
+    To tell meaningful stories that uplift people and strengthen communities.
+  </blockquote>
+
+  <p>
+    My long-term goal is to return home and build a film and media company in Hawaiʻi that creates opportunities for local creatives.
+  </p>
+
+</section>
+
+
+<!-- EXPERIENCE -->
+<section class="fade-in">
+
+  <h2>Experience</h2>
+
+  <div class="experience-item">
+    <h3>BYU Marriott School of Business</h3>
+    <p><strong>Storyteller Stipend Student</strong></p>
+    <p>Documented an international study abroad program through photography, video, and interviews.</p>
+  </div>
+
+</section>
+
+
+<!-- LEADERSHIP -->
+<section class="fade-in">
+
+  <h2>Leadership & Service</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <h3>Relief Society Presidency</h3>
+      <p>Organizing service, community engagement, and leadership initiatives at BYU.</p>
+    </div>
+
+    <div class="card">
+      <h3>Riflery Team Captain</h3>
+      <p>Led a competitive state team focused on discipline, mentorship, and performance under pressure.</p>
+    </div>
+
+    <div class="card">
+      <h3>Tutor</h3>
+      <p>Supported students academically and helped improve overall academic success outcomes.</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="fade-in">
+
+  <h2>Featured Projects</h2>
+
+  <div class="cards">
+
+    <div class="project">
+      <h3>Business Fundamentals in Europe</h3>
+      <p>Photography, interviews, and storytelling across a study abroad program.</p>
+    </div>
+
+    <div class="project">
+      <h3>Podcast Marketing</h3>
+      <p>Social media strategy, audience growth, and content production.</p>
+    </div>
+
+    <div class="project">
+      <h3>Creative Media</h3>
+      <p>Travel photography and visual storytelling projects.</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- VISION -->
+<section class="fade-in">
+
+  <h2>Where I'm Going</h2>
+
+  <p>
+    I aim to combine marketing, filmmaking, and entrepreneurship to create opportunities for Hawaiians to tell their own stories.
+  </p>
+
+  <p>
+    My vision is to build a media company in Hawaiʻi that produces authentic stories and creates careers for local creatives.
+  </p>
+
+</section>
+
+</body>
+</html>
