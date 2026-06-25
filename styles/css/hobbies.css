@@ -1,46 +1,97 @@
+/* Use the same design system variables as project.css */
+:root {
+    --navy:     #0b1b2b;
+    --sand:     #d6c7ad;
+    --offwhite: #f7f5f0;
+    --muted:    #8d8a83;
+    --text:     #1c1c1c;
+    --accent:   #b5926b;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
 body {
-    background-color: #f5f3ef;
-    font-family: Georgia, serif;
-    color: #222;
-    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: var(--offwhite);
+    color: var(--text);
+    line-height: 1.6;
 }
 
 header {
     text-align: center;
-    padding: 80px;
+    padding: 100px 16px;
 }
 
 nav {
     text-align: center;
-    padding: 20px;
+    padding: 24px 16px;
 }
 
 section {
     max-width: 1000px;
-    margin: auto;
-    padding: 60px;
+    margin: 0 auto;
+    padding: 60px 16px;
 }
 
 img {
     width: 100%;
-    border-radius: 12px;
+    border-radius: 10px;
+    display: block;
 }
 
 .feature-box {
-    background: white;
-    padding: 25px;
-    margin: 25px 0;
-    border-radius: 10px;
+    background: #ffffff;
+    padding: 28px;
+    margin: 24px 0;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(11,27,43,0.06);
+    border: 1px solid rgba(13,21,29,0.04);
 }
 
 .highlight {
-    color: #1e5a73;
+    color: var(--navy);
+    font-weight: 600;
 }
 
-.button {
+.button, .btn {
     display: inline-block;
-    padding: 12px 24px;
-    background: #1e5a73;
-    color: white;
+    padding: 12px 22px;
+    background: var(--navy);
+    color: #fff;
     text-decoration: none;
+    border-radius: 999px;
+    font-weight: 500;
+}
+
+/* Typography adjustments to match resume */
+h1, h2, h3 {
+    font-family: "Playfair Display", serif;
+    color: var(--navy);
+}
+
+h1 { font-size: 2.4rem; margin-bottom: 12px; }
+h2 { font-size: 1.4rem; margin-bottom: 8px; }
+
+p { color: var(--muted); font-size: 1rem; }
+
+/* layout for hobby cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.card img { border-radius: 10px; }
+
+/* footer */
+footer {
+    padding: 48px 16px;
+    text-align: center;
+    color: var(--muted);
+}
+
+@media (min-width: 900px) {
+    section { padding: 80px 10%; }
+    header { padding: 120px 0; }
 }
