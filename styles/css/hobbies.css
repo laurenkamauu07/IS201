@@ -31,6 +31,18 @@ header {
     max-width: 720px;
     width: 100%;
     margin: 0 auto;
+    padding: 0 12px;
+}
+
+.hero-text h1 {
+    margin-bottom: 18px;
+}
+
+.hero-text .label {
+    display: inline-block;
+    max-width: 640px;
+    margin: 0 auto 18px;
+    text-align: center;
 }
 
 nav {
