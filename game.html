@@ -1,16 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Play My Game</title>
-  <link rel="stylesheet" href="styles/css/project.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BYU Alchemy</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  #app { display: flex; height: 620px; width: 780px; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.10); }
+
+  /* SIDEBAR */
+  #sidebar { width: 195px; min-width: 195px; display: flex; flex-direction: column; background: #fafafa; border-right: 1px solid #e0e0e0; }
+  #sid-head { padding: 10px 12px; background: #002654; }
+  #sid-head h3 { font-size: 13px; font-weight: 600; color: #fff; }
+  #sid-head p { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+  #search { width: 100%; font-size: 12px; padding: 7px 10px; border: none; border-bottom: 1px solid #e0e0e0; background: #fff; color: #222; outline: none; }
+  #elist { flex: 1; overflow-y: auto; padding: 6px; display: flex; flex-direction: column; gap: 3px; }
+  .chip { display: flex; align-items: center; gap: 7px; padding: 5px 8px; border-radius: 7px; cursor: pointer; font-size: 12px; color: #222; border: 1px solid transparent; background: transparent; user-select: none; }
+  .chip:hover { background: #fff; border-color: #ddd; }
+  .chip-icon { font-size: 16px; width: 20px; text-align: center; }
+
+  /* BOARD */
+  #board-wrap { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  #board { flex: 1; position: relative; background: #fff; overflow: hidden; }
+  #hint-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 13px; color: #aaa; text-align: center; pointer-events: none; line-height: 2; }
+  #toast { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); background: #002654; color: #fff; font-size: 12px; font-weight: 500; padding: 6px 18px; border-radius: 8px; opacity: 0; pointer-events: none; white-space: nowrap; transition: opacity 0.25s; z-index: 20; }
+  #toast.on { opacity: 1; }
+  #bbar { padding: 7px 12px; background: #fafafa; border-top: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; }
+  #bbar span { font-size: 11px; color: #999; }
+  #clr { font-size: 11px; padding: 3px 10px; border: 1px solid #ddd; border-radius: 7px; background: transparent; color: #888; cursor: pointer; }
+  #clr:hover { background: #f0f0f0; }
+
+  /* TILES */
+  .tile { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 8px; min-width: 64px; max-width: 90px; border-radius: 8px; border: 1px solid #e0e0e0; background: #fff; font-size: 11px; color: #222; text-align: center; cursor: pointer; user-select: none; transition: border-color 0.15s, background 0.15s; word-break: break-word; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .tile:hover { border-color: #bbb; background: #fafafa; }
+  .tile.sel { border-color: #002654; background: #E6F1FB; color: #002654; }
+  .tile .ti { font-size: 20px; line-height: 1.2; }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Play My Game</h1>
-    <p>This is your game page. Add your game content here.</p>
-    <a href="index.html">← Return to Resume</a>
-  </header>
+<div id="app">
+  <div id="sidebar">
+    <div id="sid-head">
+      <h3>BYU Alchemy</h3>
+      <p id="dcount">8 / 38 discovered</p>
+    </div>
+    <input id="search" placeholder="search elements..." />
+    <div id="elist"></div>
+  </div>
+  <div id="board-wrap">
+    <div id="board">
+      <div id="hint-text">click an element from the sidebar to place it on the board<br>then click two tiles together to combine them</div>
+      <div id="toast"></div>
+    </div>
+    <div id="bbar">
+      <span id="bcount">0 tiles on board</span>
+      <button id="clr">clear board</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const EL = {
+  student:     { icon: '🎒', label: 'student',          base: true },
+  faith:       { icon: '✝️',  label: 'faith',            base: true },
+  book:        { icon: '📖', label: 'book',              base: true },
+  campus:      { icon: '🏛️', label: 'campus',            base: true },
+  snow:        { icon: '❄️',  label: 'snow',              base: true },
+  food:        { icon: '🍕', label: 'food',              base: true },
+  time:        { icon: '⏰', label: 'time',              base: true },
+  money:       { icon: '💵', label: 'money',             base: true },
+  honor_code:  { icon: '📜', label: 'honor code' },
+  byu_spirit:  { icon: '💙', label: 'BYU spirit' },
+  cosmo:       { icon: '🐾', label: 'Cosmo' },
+  devotional:  { icon: '🎤', label: 'devotional' },
+  finals_week: { icon: '😰', label: 'finals week' },
+  ramen:       { icon: '🍜', label: 'ramen' },
+  late_night:  { icon: '🌙', label: 'late night' },
+  all_nighter: { icon: '😵', label: 'all-nighter' },
+  testimony:   { icon: '🕊️', label: 'testimony' },
+  mission:     { icon: '✈️', label: 'mission' },
+  married:     { icon: '💍', label: 'married' },
+  cougareat:   { icon: '🍔', label: 'cougareat' },
+  library:     { icon: '📚', label: 'library' },
+  internship:  { icon: '💼', label: 'internship' },
+  diploma:     { icon: '🎓', label: 'diploma' },
+  y_mountain:  { icon: '⛰️', label: 'Y mountain' },
+  hike:        { icon: '🥾', label: 'hike' },
+  ward:        { icon: '⛪', label: 'ward' },
+  fhe:         { icon: '🏠', label: 'FHE' },
+  intramurals: { icon: '🏐', label: 'intramurals' },
+  tuition:     { icon: '💸', label: 'tuition' },
+  scholarship: { icon: '🏆', label: 'scholarship' },
+  bom:         { icon: '📕', label: 'Book of Mormon' },
+  revelation:  { icon: '💡', label: 'revelation' },
+  green_cohort:{ icon: '🐍', label: 'green cohort B' },
+  professor:   { icon: '🧑‍🏫', label: 'professor' },
+  semester:    { icon: '📅', label: 'semester' },
+  cougar_blue: { icon: '💎', label: 'cougar blue' },
+  married_byu: { icon: '🎊', label: 'BYU married' },
+  timpanogos:  { icon: '🏔️', label: 'Timpanogos' },
+  temple:      { icon: '🕍', label: 'temple' },
+  scriptures:  { icon: '📗', label: 'scriptures' },
+};
+
+const RECIPES = [
+  ['student',    'faith',      'honor_code'],
+  ['student',    'book',       'library'],
+  ['campus',     'snow',       'y_mountain'],
+  ['y_mountain', 'student',    'hike'],
+  ['hike',       'student',    'timpanogos'],
+  ['faith',      'faith',      'temple'],
+  ['temple',     'book',       'scriptures'],
+  ['scriptures', 'student',    'mission'],
+  ['student',    'time',       'finals_week'],
+  ['finals_week','food',       'ramen'],
+  ['food',       'money',      'cougareat'],
+  ['student',    'money',      'tuition'],
+  ['tuition',    'faith',      'scholarship'],
+  ['time',       'student',    'late_night'],
+  ['late_night', 'book',       'all_nighter'],
+  ['honor_code', 'faith',      'byu_spirit'],
+  ['byu_spirit', 'campus',     'cosmo'],
+  ['faith',      'book',       'devotional'],
+  ['devotional', 'faith',      'testimony'],
+  ['testimony',  'time',       'mission'],
+  ['student',    'faith',      'bom'],
+  ['bom',        'faith',      'revelation'],
+  ['student',    'campus',     'ward'],
+  ['ward',       'time',       'fhe'],
+  ['campus',     'food',       'cougareat'],
+  ['student',    'time',       'semester'],
+  ['semester',   'book',       'professor'],
+  ['scholarship','time',       'internship'],
+  ['semester',   'semester',   'diploma'],
+  ['byu_spirit', 'cosmo',      'cougar_blue'],
+  ['student',    'student',    'married'],
+  ['married',    'campus',     'married_byu'],
+  ['fhe',        'student',    'intramurals'],
+  ['byu_spirit', 'revelation', 'green_cohort'],
+  ['internship', 'diploma',    'diploma'],
+];
+
+const TOTAL = Object.keys(EL).length;
+const discovered = new Set(Object.keys(EL).filter(k => EL[k].base));
+let tiles = [], selectedTile = null, toastTimer = null, idCounter = 0;
+
+const board    = document.getElementById('board');
+const elist    = document.getElementById('elist');
+const dcount   = document.getElementById('dcount');
+const bcount   = document.getElementById('bcount');
+const hint     = document.getElementById('hint-text');
+const toast    = document.getElementById('toast');
+const searchEl = document.getElementById('search');
+
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('on'), 2400);
+}
+
+function updateCounts() {
+  dcount.textContent = `${discovered.size} / ${TOTAL} discovered`;
+  bcount.textContent = `${tiles.length} tile${tiles.length !== 1 ? 's' : ''} on board`;
+  hint.style.display = tiles.length ? 'none' : 'block';
+}
+
+function renderSidebar() {
+  const q = searchEl.value.toLowerCase();
+  elist.innerHTML = '';
+  [...discovered]
+    .sort((a, b) => EL[a].label.localeCompare(EL[b].label))
+    .filter(k => EL[k].label.toLowerCase().includes(q))
+    .forEach(k => {
+      const d = document.createElement('div');
+      d.className = 'chip';
+      d.innerHTML = `<span class="chip-icon">${EL[k].icon}</span><span>${EL[k].label}</span>`;
+      d.addEventListener('click', () => placeFromSidebar(k));
+      elist.appendChild(d);
+    });
+  updateCounts();
+}
+
+function placeFromSidebar(key) {
+  clearSelection();
+  const bRect = board.getBoundingClientRect();
+  const x = 20 + Math.random() * (bRect.width - 130);
+  const y = 20 + Math.random() * (bRect.height - 90);
+  spawnTile(key, x, y);
+}
+
+function spawnTile(key, x, y) {
+  const id = ++idCounter;
+  const el = EL[key];
+  const div = document.createElement('div');
+  div.className = 'tile';
+  div.innerHTML = `<span class="ti">${el.icon}</span><span>${el.label}</span>`;
+  div.style.left = Math.round(x) + 'px';
+  div.style.top  = Math.round(y) + 'px';
+
+  let dragging = false, moved = false, ox = 0, oy = 0, sx = 0, sy = 0;
+
+  div.addEventListener('mousedown', e => {
+    e.stopPropagation(); e.preventDefault();
+    dragging = true; moved = false;
+    const r = div.getBoundingClientRect();
+    ox = e.clientX - r.left; oy = e.clientY - r.top;
+    sx = e.clientX; sy = e.clientY;
+    div.style.zIndex = 50;
+  });
+
+  function onMove(e) {
+    if (!dragging || div.style.zIndex !== '50') return;
+    const bRect = board.getBoundingClientRect();
+    let nx = e.clientX - bRect.left - ox;
+    let ny = e.clientY - bRect.top  - oy;
+    nx = Math.max(0, Math.min(nx, bRect.width  - div.offsetWidth));
+    ny = Math.max(0, Math.min(ny, bRect.height - div.offsetHeight));
+    div.style.left = Math.round(nx) + 'px';
+    div.style.top  = Math.round(ny) + 'px';
+    obj.x = nx; obj.y = ny;
+    if (Math.abs(e.clientX - sx) > 4 || Math.abs(e.clientY - sy) > 4) moved = true;
+  }
+  function onUp() {
+    if (!dragging) return;
+    dragging = false; div.style.zIndex = '';
+    if (!moved) handleTileClick(obj);
+  }
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+
+  const obj = { id, key, div, x, y };
+  tiles.push(obj);
+  board.appendChild(div);
+  updateCounts();
+  return obj;
+}
+
+function handleTileClick(obj) {
+  if (!selectedTile) {
+    selectedTile = obj;
+    obj.div.classList.add('sel');
+  } else if (selectedTile === obj) {
+    obj.div.classList.remove('sel');
+    selectedTile = null;
+  } else {
+    const a = selectedTile.key, b = obj.key;
+    const result = tryMerge(a, b);
+    selectedTile.div.classList.remove('sel');
+    if (result) {
+      const nx = Math.round((selectedTile.x + obj.x) / 2);
+      const ny = Math.round((selectedTile.y + obj.y) / 2);
+      removeTile(selectedTile); removeTile(obj);
+      selectedTile = null;
+      const isNew = !discovered.has(result);
+      discovered.add(result);
+      spawnTile(result, nx, ny);
+      if (isNew) {
+        showToast(`✨ discovered: ${EL[result].icon} ${EL[result].label}!`);
+        renderSidebar();
+      } else {
+        showToast(`${EL[result].icon} ${EL[result].label}`);
+        updateCounts();
+      }
+    } else {
+      selectedTile = obj;
+      obj.div.classList.add('sel');
+      showToast('no reaction — try something else');
+    }
+  }
+}
+
+function tryMerge(a, b) {
+  for (const [i1, i2, out] of RECIPES) {
+    if ((a === i1 && b === i2) || (a === i2 && b === i1)) return out;
+  }
+  return null;
+}
+
+function removeTile(obj) {
+  obj.div.remove();
+  tiles = tiles.filter(t => t !== obj);
+}
+
+function clearSelection() {
+  if (selectedTile) { selectedTile.div.classList.remove('sel'); selectedTile = null; }
+}
+
+board.addEventListener('click', e => { if (e.target === board) clearSelection(); });
+document.getElementById('clr').addEventListener('click', () => {
+  tiles.forEach(t => t.div.remove());
+  tiles = []; clearSelection(); updateCounts();
+});
+searchEl.addEventListener('input', renderSidebar);
+renderSidebar();
+</script>
 </body>
 </html>
