@@ -297,6 +297,28 @@ section {
   padding: 8px 14px;
 }
 
+.explore-section {
+  padding: 80px 10%;
+  margin-top: 60px;
+  background: var(--white);
+  border-top: 1px solid var(--sand-lt);
+}
+
+.explore-section h2 {
+  margin-bottom: 16px;
+}
+
+.explore-section p {
+  max-width: 650px;
+  margin-bottom: 26px;
+}
+
+.explore-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 .awards-list { list-style: none; padding: 0; }
 
 .awards-list li {
