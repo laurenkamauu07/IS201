@@ -2,118 +2,93 @@
 <html lang="en">
 
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Lauren Kamauu | Hobbies & Interests</title>
-
-<link rel="stylesheet" href="styles/css/hobbies.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lauren Kamauu | Hobbies & Interests</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/css/project.css">
+  <link rel="stylesheet" href="styles/css/hobbies.css">
 </head>
 
 <body>
 
-<header>
+  <header>
+    <div class="hero-text">
+      <h1>Hobbies & Interests</h1>
+      <p class="label">Activities that shape my story outside the classroom</p>
+      <div style="margin-top:18px;">
+        <a href="index.html" class="btn outline">← Return to Résumé</a>
+        <a href="game.html" class="btn" target="_blank" rel="noopener noreferrer">Play My Game</a>
+      </div>
+    </div>
+  </header>
 
-<h1>My Hobbies & Interests</h1>
-
-<p>
-These are the activities that shape who I am outside of the classroom.
-</p>
-
-<a href="index.html">← Return to Resume</a>
-
-</header>
-<nav>
-
-<a href="#photography">Photography</a>
-
-<a href="#sports">Sports</a>
-
-<a href="#hawaii">Culture</a>
-
-<a href="#video">Video</a>
-
-<a href="#tableau">Data</a>
-
-</nav>
-<section>
-
-<h2>My Top Hobbies</h2>
-
-<ol>
-
-<li>Creative Arts
-
-    <ul>
-        <li>Photography</li>
-        <li>Video Editing</li>
-        <li>Filmmaking</li>
+  <nav>
+    <ul class="nav-links" style="justify-content:center; gap:18px;">
+      <li><a href="#photography">Photography</a></li>
+      <li><a href="#sports">Sports</a></li>
+      <li><a href="#culture">Culture</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="#data">Data</a></li>
     </ul>
+  </nav>
 
-</li>
+  <main>
 
-<li>Sports
+    <section>
+      <h2>My Top Hobbies</h2>
+      <div class="cards">
+        <div class="card">
+          <img src="https://via.placeholder.com/1200x700?text=Photography" alt="Photography">
+          <h3>Creative Arts</h3>
+          <p>Photography, video editing, and filmmaking — I use visual storytelling to explore ideas and culture.</p>
+        </div>
 
-    <ul>
-        <li>Water Polo</li>
-        <li>Swimming</li>
-        <li>Snowboarding</li>
-    </ul>
+        <div class="card">
+          <img src="https://via.placeholder.com/1200x700?text=Sports" alt="Sports">
+          <h3>Sports</h3>
+          <p>Water polo, swimming, and snowboarding keep me disciplined, fit, and team-focused.</p>
+        </div>
 
-</li>
+        <div class="card">
+          <img src="https://via.placeholder.com/1200x700?text=Culture" alt="Culture">
+          <h3>Culture & Service</h3>
+          <p>Hawaiian language, community service, and storytelling connect me to my heritage.</p>
+        </div>
+      </div>
+    </section>
 
-<li>Cultural Activities
+    <section id="photography">
+      <h2>Photography & Filmmaking</h2>
+      <div class="feature-box">
+        <img src="https://via.placeholder.com/1200x700?text=Film+Stills" alt="Photography example">
+        <p>One of my long-term goals is to work in filmmaking and visual storytelling. Photography has helped me learn composition, narrative framing, and visual communication.</p>
+      </div>
+    </section>
 
-    <ul>
-        <li>Hawaiian Language</li>
-        <li>Community Service</li>
-        <li>Storytelling</li>
-    </ul>
+    <section id="video">
+      <h2>A Video That Inspires Me</h2>
+      <p>This video was filmed and edited by my dad and taught me early lessons in shooting and editing.</p>
+      <div class="feature-box">
+        <div style="position:relative;padding-top:56.25%;">
+          <iframe src="https://www.youtube.com/embed/VQ2A_1M1Zaw" title="YouTube video" style="position:absolute;left:0;top:0;width:100%;height:100%;border:0;" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
 
-</li>
+    <section>
+      <h2>Interactive Project</h2>
+      <div class="feature-box">
+        <p>As part of this project I built an AI-assisted game demonstrating basic interactivity and storytelling.</p>
+        <a href="game.html" class="btn" target="_blank" rel="noopener noreferrer">Play the Game</a>
+      </div>
+    </section>
 
-</ol>
+  </main>
 
-</section>
-<section id="photography">
+  <footer class="site-footer">
+    <p>© Lauren Kamauu</p>
+  </footer>
 
-<h2>Photography & Filmmaking</h2>
-
-<img src="images/photography.jpg"
-     alt="Photography">
-
-<p>
-One of my long-term goals is to work in filmmaking and visual storytelling.
-Photography has helped me learn composition, storytelling, and creative communication.
-</p>
-
-</section>
-<section id="video">
-
-<h2>A Video That Inspires Me</h2>
-<p> This is a video that inspires me to pursue my passion for storytelling because it was filmed and edited by my dad. I learned how to film and edit by watching him work.</p>
-
-<iframe
-width="800"
-height="450"
-src="https://www.youtube.com/watch?v=VQ2A_1M1Zaw"
-title="YouTube video"
-allowfullscreen>
-</iframe>
-
-</section>
-<section>
-
-<h2>Interactive Project</h2>
-
-<p>
-As part of this web development project, I created an AI-assisted game.
-</p>
-
-<a href="byu_alchemy.html">
-    Play My Game
-</a>
-
-</section>
+</body>
+</html>
